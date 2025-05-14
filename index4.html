@@ -1,0 +1,1740 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dipesh's Creations - Code Showcase</title>
+
+    <!-- PWA Manifest & Theme Color -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#5a4bff"> <!-- Default blue, will be updated by JS -->
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
+    <style>
+        /* --- CSS Variables (Refined Themes) --- */
+        :root {
+            /* Shared Light Mode Colors */
+            --bg-color-light: #f8f9fa; --card-bg-light: #ffffff; --text-color-light: #343a40; --heading-color-light: #212529;
+            --meta-color-light: #6c757d; --border-color-light: #dee2e6; --header-bg-light: #ffffff; --tag-bg-light: #e9ecef;
+            --tag-text-light: #495057; --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.08); --icon-color-light: #495057;
+            --icon-hover-bg-light: #e9ecef; --ad-placeholder-bg-light: #f1f3f5; --ad-placeholder-border-light: #ced4da;
+            --ad-placeholder-text-light: #868e96; --pagination-btn-bg-light: #e9ecef; --pagination-btn-text-light: #495057;
+            --pagination-btn-hover-bg-light: #dee2e6; --pagination-btn-disabled-bg-light: #f8f9fa; --pagination-btn-disabled-text-light: #adb5bd;
+            --dropdown-bg-light: var(--card-bg-light); --dropdown-border-light: var(--border-color-light); --dropdown-shadow-light: var(--shadow-light);
+            --dropdown-link-text-light: var(--text-color-light); --dropdown-link-hover-bg-light: var(--icon-hover-bg-light);
+            --liked-text-light: #ffffff; --saved-text-light: #ffffff;
+
+            /* Theme Colors - Light Mode */
+            --link-color-blue-light: #5a4bff; --link-hover-blue-light: #4839e6; --liked-bg-blue-light: #e60073; --saved-bg-blue-light: #17a2b8; --button-gradient-blue-light: linear-gradient(135deg, #5a4bff, #4839e6);
+            --link-color-green-light: #28a745; --link-hover-green-light: #218838; --liked-bg-green-light: #dc3545; --saved-bg-green-light: #ffc107; --button-gradient-green-light: linear-gradient(135deg, #28a745, #218838);
+            --link-color-purple-light: #6f42c1; --link-hover-purple-light: #563d7c; --liked-bg-purple-light: #fd7e14; --saved-bg-purple-light: #20c997; --button-gradient-purple-light: linear-gradient(135deg, #6f42c1, #563d7c);
+
+            /* Shared Dark Mode Colors */
+            --bg-color-dark: #1a1a1a; --card-bg-dark: #2c2c2c; --text-color-dark: #e0e0e0; --heading-color-dark: #ffffff;
+            --meta-color-dark: #adb5bd; --border-color-dark: #444; --header-bg-dark: #2c2c2c; --tag-bg-dark: #495057;
+            --tag-text-dark: #e9ecef; --shadow-dark: 0 5px 15px rgba(0, 0, 0, 0.2); --icon-color-dark: #adb5bd;
+            --icon-hover-bg-dark: #495057; --ad-placeholder-bg-dark: #343a40; --ad-placeholder-border-dark: #495057;
+            --ad-placeholder-text-dark: #adb5bd; --pagination-btn-bg-dark: #495057; --pagination-btn-text-dark: #e9ecef;
+            --pagination-btn-hover-bg-dark: #6c757d; --pagination-btn-disabled-bg-dark: #343a40; --pagination-btn-disabled-text-dark: #6c757d;
+            --dropdown-bg-dark: var(--card-bg-dark); --dropdown-border-dark: var(--border-color-dark); --dropdown-shadow-dark: var(--shadow-dark);
+            --dropdown-link-text-dark: var(--text-color-dark); --dropdown-link-hover-bg-dark: var(--icon-hover-bg-dark);
+            --liked-text-dark: #ffffff; --saved-text-dark: #1a1a1a; /* Dark text on light Saved bg */
+
+            /* Theme Colors - Dark Mode */
+            --link-color-blue-dark: #7b6bff; --link-hover-blue-dark: #a094ff; --liked-bg-blue-dark: #f74da7; --saved-bg-blue-dark: #34d3eb; --button-gradient-blue-dark: linear-gradient(135deg, #7b6bff, #a094ff);
+            --link-color-green-dark: #34c759; --link-hover-green-dark: #2ea44f; --liked-bg-green-dark: #ff4d4f; --saved-bg-green-dark: #ffda6b; --button-gradient-green-dark: linear-gradient(135deg, #34c759, #2ea44f);
+            --link-color-purple-dark: #bf87ff; --link-hover-purple-dark: #aa6fff; --liked-bg-purple-dark: #f59e42; --saved-bg-purple-dark: #63e6be; --button-gradient-purple-dark: linear-gradient(135deg, #bf87ff, #aa6fff);
+
+            /* Font Variables */
+            --font-primary: 'Poppins', sans-serif; --font-heading: 'Roboto Slab', serif;
+
+            /* Default Theme Application (Blue, Light) - Applied via JS */
+             --bg-color: var(--bg-color-light); --card-bg: var(--card-bg-light); --text-color: var(--text-color-light); --heading-color: var(--heading-color-light);
+             --meta-color: var(--meta-color-light); --border-color: var(--border-color-light); --header-bg: var(--header-bg-light); --tag-bg: var(--tag-bg-light);
+             --tag-text: var(--tag-text-light); --shadow: var(--shadow-light); --icon-color: var(--icon-color-light); --icon-hover-bg: var(--icon-hover-bg-light);
+             --ad-placeholder-bg: var(--ad-placeholder-bg-light); --ad-placeholder-border: var(--ad-placeholder-border-light); --ad-placeholder-text: var(--ad-placeholder-text-light);
+             --pagination-btn-bg: var(--pagination-btn-bg-light); --pagination-btn-text: var(--pagination-btn-text-light); --pagination-btn-hover-bg: var(--pagination-btn-hover-bg-light);
+             --pagination-btn-disabled-bg: var(--pagination-btn-disabled-bg-light); --pagination-btn-disabled-text: var(--pagination-btn-disabled-text-light);
+             --dropdown-bg: var(--dropdown-bg-light); --dropdown-border: var(--dropdown-border-light); --dropdown-shadow: var(--dropdown-shadow-light);
+             --dropdown-link-text: var(--dropdown-link-text-light); --dropdown-link-hover-bg: var(--dropdown-link-hover-bg-light);
+             --link-color: var(--link-color-blue-light); --link-hover: var(--link-hover-blue-light); --liked-bg: var(--liked-bg-blue-light); --liked-text: var(--liked-text-light);
+             --saved-bg: var(--saved-bg-blue-light); --saved-text: var(--saved-text-light); --button-gradient: var(--button-gradient-blue-light);
+             --dropdown-link-hover-text: var(--link-color-blue-light);
+
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dynamically Applied Theme Classes via JS */
+        body.theme-blue { --link-color: var(--link-color-blue-light); --link-hover: var(--link-hover-blue-light); --liked-bg: var(--liked-bg-blue-light); --saved-bg: var(--saved-bg-blue-light); --button-gradient: var(--button-gradient-blue-light); --dropdown-link-hover-text: var(--link-color-blue-light); }
+        body.theme-green { --link-color: var(--link-color-green-light); --link-hover: var(--link-hover-green-light); --liked-bg: var(--liked-bg-green-light); --saved-bg: var(--saved-bg-green-light); --button-gradient: var(--button-gradient-green-light); --dropdown-link-hover-text: var(--link-color-green-light); }
+        body.theme-purple { --link-color: var(--link-color-purple-light); --link-hover: var(--link-hover-purple-light); --liked-bg: var(--liked-bg-purple-light); --saved-bg: var(--saved-bg-purple-light); --button-gradient: var(--button-gradient-purple-light); --dropdown-link-hover-text: var(--link-color-purple-light); }
+
+        body.dark-mode {
+            --bg-color: var(--bg-color-dark); --card-bg: var(--card-bg-dark); --text-color: var(--text-color-dark); --heading-color: var(--heading-color-dark);
+            --meta-color: var(--meta-color-dark); --border-color: var(--border-color-dark); --header-bg: var(--header-bg-dark); --tag-bg: var(--tag-bg-dark);
+            --tag-text: var(--tag-text-dark); --shadow: var(--shadow-dark); --icon-color: var(--icon-color-dark); --icon-hover-bg: var(--icon-hover-bg-dark);
+            --ad-placeholder-bg: var(--ad-placeholder-bg-dark); --ad-placeholder-border: var(--ad-placeholder-border-dark); --ad-placeholder-text: var(--ad-placeholder-text-dark);
+            --pagination-btn-bg: var(--pagination-btn-bg-dark); --pagination-btn-text: var(--pagination-btn-text-dark); --pagination-btn-hover-bg: var(--pagination-btn-hover-bg-dark);
+            --pagination-btn-disabled-bg: var(--pagination-btn-disabled-bg-dark); --pagination-btn-disabled-text: var(--pagination-btn-disabled-text-dark);
+            --dropdown-bg: var(--dropdown-bg-dark); --dropdown-border: var(--dropdown-border-dark); --dropdown-shadow: var(--dropdown-shadow-dark);
+            --dropdown-link-text: var(--dropdown-link-text-dark); --dropdown-link-hover-bg: var(--dropdown-link-hover-bg-dark);
+            --liked-text: var(--liked-text-dark); --saved-text: var(--saved-text-dark);
+        }
+
+        body.dark-mode.theme-blue { --link-color: var(--link-color-blue-dark); --link-hover: var(--link-hover-blue-dark); --liked-bg: var(--liked-bg-blue-dark); --saved-bg: var(--saved-bg-blue-dark); --button-gradient: var(--button-gradient-blue-dark); --dropdown-link-hover-text: var(--link-color-blue-dark); }
+        body.dark-mode.theme-green { --link-color: var(--link-color-green-dark); --link-hover: var(--link-hover-green-dark); --liked-bg: var(--liked-bg-green-dark); --saved-bg: var(--saved-bg-green-dark); --button-gradient: var(--button-gradient-green-dark); --dropdown-link-hover-text: var(--link-color-green-dark); }
+        body.dark-mode.theme-purple { --link-color: var(--link-color-purple-dark); --link-hover: var(--link-hover-purple-dark); --liked-bg: var(--liked-bg-purple-dark); --saved-bg: var(--saved-bg-purple-dark); --button-gradient: var(--button-gradient-purple-dark); --dropdown-link-hover-text: var(--link-color-purple-dark); }
+
+
+        /* --- Basic Reset & Body Styles --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-primary); background-color: var(--bg-color); color: var(--text-color);
+            line-height: 1.7; padding-bottom: 100px; /* Space for sticky ad */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container { max-width: 950px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- Accessibility: Skip Link --- */
+        .skip-link {
+            position: absolute; top: -999px; left: 10px; background: var(--card-bg);
+            color: var(--link-color); padding: 10px 15px; z-index: 10000;
+            border: 1px solid var(--border-color); border-radius: 0 0 5px 5px;
+            text-decoration: none; font-weight: 600; transition: top 0.2s ease-in-out;
+        }
+        .skip-link:focus { top: 0; }
+
+        /* --- Header Styles --- */
+        .site-header { background: linear-gradient(135deg, var(--header-bg), var(--bg-color)); padding: 15px 0; margin-bottom: 40px; border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; transition: background 0.3s ease, border-color 0.3s ease; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .site-branding { display: flex; align-items: center; flex-shrink: 0; }
+        .site-branding h1 { font-family: var(--font-heading); font-size: 2.0em; margin: 0; background: linear-gradient(90deg, var(--link-color), var(--heading-color)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; transition: background 0.3s ease; white-space: nowrap; }
+        .site-branding h1 a { color: var(--heading-color); text-decoration: none; }
+        .globe-container { width: 45px; height: 45px; margin-right: 12px; flex-shrink: 0; }
+        .globe-container canvas { display: block; }
+        .header-nav-controls { display: flex; align-items: center; gap: 15px; flex-grow: 1; justify-content: flex-end; flex-wrap: wrap; }
+        .main-navigation { order: 1; }
+        .main-navigation ul { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
+        .main-navigation li { position: relative; }
+        .main-navigation a { font-weight: 600; color: var(--text-color); text-decoration: none; padding-bottom: 5px; position: relative; transition: transform 0.2s ease, color 0.3s ease; white-space: nowrap; }
+        .main-navigation a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--link-color); transition: width 0.3s ease; }
+        .main-navigation a:hover, .main-navigation a:focus { color: var(--link-color); transform: scale(1.05); outline: none; } /* Added focus style */
+        .main-navigation a:focus-visible::after { width: 100%; } /* Underline on focus-visible */
+        .main-navigation a:hover::after { width: 100%; }
+        #tags-nav-link::after { content: "\f0d7"; font-family: "Font Awesome 6 Free"; font-weight: 900; margin-left: 5px; font-size: 0.8em; display: inline-block; transition: transform 0.2s ease-in-out; }
+        #tags-nav-link.open::after { transform: rotate(180deg); }
+        #tags-dropdown { display: none; position: absolute; top: 100%; left: 0; background-color: var(--dropdown-bg); border: 1px solid var(--dropdown-border); border-radius: 5px; box-shadow: var(--dropdown-shadow); list-style: none; padding: 10px 0; margin: 5px 0 0 0; min-width: 220px; max-height: 300px; overflow-y: auto; z-index: 1100; transform-origin: top center; transform: scale(0.95); opacity: 0; transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.3s ease, border-color 0.3s ease; }
+        #tags-dropdown.visible { display: block; transform: scale(1); opacity: 1; }
+        #tags-dropdown li a { display: block; padding: 10px 20px; color: var(--dropdown-link-text); text-decoration: none; font-size: 0.95em; font-weight: 400; white-space: nowrap; transition: background-color 0.2s ease, color 0.2s ease; }
+        #tags-dropdown li a::after { content: none; }
+        #tags-dropdown li a:hover, #tags-dropdown li a:focus { background-color: var(--dropdown-link-hover-bg); color: var(--dropdown-link-hover-text); outline: none; }
+        #tags-dropdown li a .emoji { margin-right: 8px; display: inline-block; width: 1.2em; text-align: center; }
+
+        /* Search Box */
+        .search-container { position: relative; width: 100%; max-width: 220px; order: 2; }
+        .search-container input { width: 100%; padding: 8px 35px 8px 15px; border: 1px solid var(--border-color); border-radius: 20px; background-color: var(--card-bg); color: var(--text-color); font-family: var(--font-primary); font-size: 0.9em; transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.2s ease; }
+        .search-container input:focus { outline: none; border-color: var(--link-color); box-shadow: 0 0 0 3px var(--link-color-focus, rgba(90, 75, 255, 0.3)); } /* Focus ring */
+        .search-container i.fa-search { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--meta-color); font-size: 1em; pointer-events: none; }
+        .search-autocomplete { position: absolute; top: calc(100% + 5px); left: 0; right: 0; background-color: var(--dropdown-bg); border: 1px solid var(--dropdown-border); border-radius: 5px; box-shadow: var(--dropdown-shadow); max-height: 200px; overflow-y: auto; z-index: 1100; display: none; }
+        .search-autocomplete.visible { display: block; opacity: 0; transform: translateY(-5px); animation: fadeInDropdown 0.2s ease forwards; }
+        @keyframes fadeInDropdown { to { opacity: 1; transform: translateY(0); } }
+        .search-autocomplete li { list-style: none; }
+        .search-autocomplete li a { display: block; padding: 8px 15px; color: var(--dropdown-link-text); text-decoration: none; font-size: 0.85em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: background-color 0.2s ease, color 0.2s ease; }
+        .search-autocomplete li a:hover, .search-autocomplete li a:focus { background-color: var(--dropdown-link-hover-bg); color: var(--dropdown-link-hover-text); outline: none; }
+
+        /* Header Controls */
+        .header-controls { display: flex; align-items: center; gap: 10px; order: 3; flex-wrap: wrap; } /* Allow wrap */
+        .header-social-links { display: flex; gap: 5px; } /* Tighter social links */
+        .header-social-links a { color: var(--icon-color); font-size: 1.2em; text-decoration: none; padding: 5px; border-radius: 50%; transition: color 0.3s ease, background-color 0.3s ease; }
+        .header-social-links a:hover, .header-social-links a:focus { color: var(--link-color); background-color: var(--icon-hover-bg); outline: none; }
+        #darkModeToggle { background: none; border: 1px solid var(--border-color); color: var(--icon-color); font-size: 1.1em; cursor: pointer; padding: 6px 8px; border-radius: 5px; line-height: 1; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        #darkModeToggle:hover, #darkModeToggle:focus { background-color: var(--icon-hover-bg); color: var(--link-color); outline: none; }
+
+        /* Theme Color Selector */
+        #theme-color {
+            padding: 6px 8px; border: 1px solid var(--border-color); border-radius: 5px;
+            background-color: var(--card-bg); color: var(--text-color); font-family: var(--font-primary);
+            cursor: pointer; font-size: 0.9em; appearance: none; /* Modern reset */
+            /* Simple arrow using background gradient */
+            background-image: linear-gradient(45deg, transparent 50%, var(--icon-color) 50%), linear-gradient(135deg, var(--icon-color) 50%, transparent 50%);
+            background-position: calc(100% - 15px) center, calc(100% - 10px) center;
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
+            padding-right: 30px; /* Space for arrow */
+            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+        #theme-color:focus { outline: none; border-color: var(--link-color); box-shadow: 0 0 0 3px var(--link-color-focus, rgba(90, 75, 255, 0.3)); }
+
+        /* --- Hero Section --- */
+        .hero-section { text-align: center; padding: 50px 20px; background: linear-gradient(135deg, var(--bg-color), var(--card-bg)); border-radius: 10px; margin-bottom: 40px; box-shadow: var(--shadow); border: 1px solid var(--border-color); transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        .hero-section h2 { font-family: var(--font-heading); font-size: 2.3em; color: var(--heading-color); margin-bottom: 15px; transition: color 0.3s ease; }
+        .typed-text { font-size: 1.2em; color: var(--text-color); min-height: 1.6em; font-weight: 400; transition: color 0.3s ease; }
+        .typed-text .cursor { display: inline-block; width: 2px; height: 1.2em; background-color: var(--link-color); margin-left: 2px; animation: blink 0.7s infinite; vertical-align: text-bottom; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* --- Filter Section --- */
+        .filter-section { margin-bottom: 30px; text-align: center; }
+        #category-filter {
+            padding: 10px 15px; border: 1px solid var(--border-color); border-radius: 5px;
+            background-color: var(--card-bg); color: var(--text-color); font-family: var(--font-primary);
+            font-size: 1em; cursor: pointer; transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+            min-width: 200px; appearance: none; /* Modern reset */
+            background-image: linear-gradient(45deg, transparent 50%, var(--icon-color) 50%), linear-gradient(135deg, var(--icon-color) 50%, transparent 50%);
+            background-position: calc(100% - 20px) center, calc(100% - 15px) center;
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
+            padding-right: 40px; /* Space for arrow */
+        }
+        #category-filter:focus { outline: none; border-color: var(--link-color); box-shadow: 0 0 0 3px var(--link-color-focus, rgba(90, 75, 255, 0.3)); }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+        /* --- Favorites Section --- */
+        #favorites-section { margin-bottom: 40px; padding: 25px; background-color: var(--card-bg); border-radius: 10px; border: 1px solid var(--border-color); box-shadow: var(--shadow); transition: background-color 0.3s ease, border-color 0.3s ease; }
+        #favorites-section h2 { font-family: var(--font-heading); font-size: 1.8em; color: var(--heading-color); margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        #favorites-container { display: grid; gap: 12px; }
+        #favorites-container:empty::after { content: "You haven't saved any favorites yet. Click the bookmark icon!"; display: block; color: var(--meta-color); font-style: italic; margin-top: 10px; }
+        .favorite-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border: 1px solid var(--border-color); border-radius: 5px; background-color: var(--bg-color); transition: background-color 0.3s ease; }
+        .favorite-item a { color: var(--link-color); text-decoration: none; font-weight: 600; margin-right: 10px; }
+        .favorite-item a:hover, .favorite-item a:focus { color: var(--link-hover); text-decoration: underline; outline: none; }
+        .remove-favorite { background: none; border: none; color: var(--meta-color); cursor: pointer; font-size: 1.1em; padding: 5px; line-height: 1; transition: color 0.2s ease; }
+        .remove-favorite:hover, .remove-favorite:focus { color: #dc3545; outline: none; }
+
+        /* --- Post Card Styling --- */
+        #posts-container { display: grid; gap: 50px; min-height: 200px; padding-top: 10px; }
+        #posts-container[aria-busy="true"]::before { /* Loading state overlay */
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(128, 128, 128, 0.1); z-index: 1;
+            display: block;
+        }
+        .post-card { background: linear-gradient(145deg, var(--card-bg), var(--bg-color)); border-radius: 10px; box-shadow: var(--shadow); overflow: hidden; padding: 40px; transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease; border: 1px solid var(--border-color); display: flex; flex-direction: column; opacity: 0; animation: fadeIn 0.5s ease forwards; animation-delay: calc(var(--card-index, 0) * 0.05s); position: relative; }
+        .post-card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12); }
+        body.dark-mode .post-card:hover { box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .post-card h2.post-title { font-family: var(--font-heading); font-size: 2em; margin-bottom: 15px; color: var(--heading-color); transition: color 0.3s ease; position: relative; cursor: pointer; }
+        .post-card h2.post-title:hover { color: var(--link-color); }
+        .post-card h2.post-title::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 3px; background: var(--link-color); transition: width 0.3s ease; }
+        .post-card h2.post-title:hover::after { width: 100%; }
+        .post-description { font-size: 1.0em; color: var(--text-color); margin-bottom: 20px; transition: color 0.3s ease; line-height: 1.6; }
+
+        /* Post Stats */
+        .post-stats { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; color: var(--meta-color); font-size: 0.9em; border-top: 1px dashed var(--border-color); padding-top: 15px; }
+        .post-stats span { display: inline-flex; align-items: center; gap: 6px; }
+        .post-stats i { color: var(--link-color); opacity: 0.8; }
+
+        /* iFrame Container */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            /* padding-top: 75%; /* Original 4:3 Aspect Ratio */
+            padding-top: 150%; /* <<< MODIFIED for 2:3 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            margin: 0 0 20px 0;
+            border: 1px solid var(--border-color);
+            background-color: var(--ad-placeholder-bg); /* Use ad placeholder for consistency */
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+
+        /* Post Actions */
+        .post-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border-color); transition: border-color 0.3s ease; }
+        .post-actions button { background: var(--button-gradient); color: #ffffff; border: none; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 0.9em; font-weight: 600; font-family: var(--font-primary); display: inline-flex; align-items: center; gap: 6px; transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.2s ease; }
+        .post-actions button:hover:not(.liked):not(.saved),
+        .post-actions button:focus:not(.liked):not(.saved) { transform: scale(1.05); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); outline: none; }
+        .post-actions button i { font-size: 1.1em; }
+        .post-actions button.like-button.liked { background: var(--liked-bg); color: var(--liked-text); transform: scale(1); box-shadow: none; }
+        .post-actions button.like-button.liked i { /* Color handled by JS now */ }
+        .post-actions button.save-button.saved { background: var(--saved-bg); color: var(--saved-text); transform: scale(1); box-shadow: none; }
+        .post-actions button.save-button.saved i { /* Color handled by JS now */ }
+        .share-count { margin-left: 5px; font-size: 0.85em; opacity: 0.7; }
+
+        /* Comment Area */
+        .comment-area { display: none; width: 100%; margin-top: 15px; padding-left: 5px; flex-basis: 100%; }
+        .comment-area.visible { display: block; animation: fadeInCommentArea 0.3s ease; }
+        @keyframes fadeInCommentArea { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .comment-area textarea { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; min-height: 80px; background-color: var(--card-bg); color: var(--text-color); font-family: var(--font-primary); font-size: 0.95em; resize: vertical; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.2s ease; margin-bottom: 10px; }
+        .comment-area textarea:focus { outline: none; border-color: var(--link-color); box-shadow: 0 0 0 3px var(--link-color-focus, rgba(90, 75, 255, 0.3)); }
+        .submit-comment-button { background: var(--button-gradient); color: #ffffff; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.2s ease; margin-top: 5px; display: inline-block; }
+        .submit-comment-button:hover, .submit-comment-button:focus { transform: scale(1.03); box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); outline: none; }
+
+        /* Comments List */
+        .comments-list { margin-top: 15px; max-height: 250px; overflow-y: auto; border-top: 1px dashed var(--border-color); padding-top: 15px; }
+        .comment { padding: 10px 5px; border-bottom: 1px solid var(--border-color); font-size: 0.9em; line-height: 1.5; word-wrap: break-word; }
+        .comment:last-child { border-bottom: none; }
+        .comment strong { color: var(--link-color); margin-right: 5px; font-weight: 600; }
+        .comment small { color: var(--meta-color); font-size: 0.8em; margin-left: 0; display: block; margin-top: 3px; } /* Adjusted small style */
+
+        /* Ad Placeholders */
+        .ad-placeholder { background: linear-gradient(145deg, var(--ad-placeholder-bg), var(--bg-color)); border: 1px solid var(--ad-placeholder-border); border-radius: 8px; padding: 20px; text-align: center; min-height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 20px 0; box-shadow: var(--shadow); transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease; }
+        .ad-placeholder:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); }
+        body.dark-mode .ad-placeholder:hover { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); }
+        .ad-placeholder small { color: var(--link-color); font-size: 1em; font-weight: 600; margin-bottom: 10px; display: block; transition: color 0.3s ease; }
+        .ad-placeholder .adsbygoogle { display: flex; align-items: center; justify-content: center; width: 100%; height: auto; min-height: 60px; font-size: 1.1em; color: var(--ad-placeholder-text); background: repeating-linear-gradient( -45deg, rgba(0,0,0,0.03), rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.05) 10px, rgba(0,0,0,0.05) 20px ); }
+        .ad-placeholder .adsbygoogle::before { content: "📢 Ad Unit "; margin-right: 5px; }
+
+        /* Loading/Status Message */
+        #status-message-container { text-align: center; padding: 40px 0; } /* Separate container for status */
+        p.status-message { font-size: 1.1em; color: var(--meta-color); transition: color 0.3s ease; }
+        p.status-message i { margin-right: 8px; display: inline-block; }
+        p.status-message i.fa-spinner { animation: spin 1.2s infinite linear; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Pagination */
+        #pagination-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color); transition: border-color 0.3s ease; }
+        #pagination-controls button { background-color: var(--pagination-btn-bg); color: var(--pagination-btn-text); border: 1px solid var(--border-color); padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; font-family: var(--font-primary); transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        #pagination-controls button:hover:not(:disabled),
+        #pagination-controls button:focus:not(:disabled) { background-color: var(--pagination-btn-hover-bg); outline: none; }
+        #pagination-controls button:disabled { background-color: var(--pagination-btn-disabled-bg); color: var(--pagination-btn-disabled-text); cursor: not-allowed; opacity: 0.7; }
+        #page-info { font-size: 0.95em; color: var(--meta-color); font-weight: 600; transition: color 0.3s ease; margin: 0 10px; }
+
+        /* About Me Section */
+        #about-section { margin-top: 60px; padding: 40px; background-color: var(--card-bg); border-radius: 10px; border: 1px solid var(--border-color); box-shadow: var(--shadow); text-align: center; transition: background-color 0.3s ease, border-color 0.3s ease; }
+        #about-section h2 { font-family: var(--font-heading); color: var(--heading-color); font-size: 2em; margin-bottom: 15px; }
+        #about-section .about-intro { font-size: 1.2em; color: var(--text-color); max-width: 650px; margin: 0 auto 25px auto; line-height: 1.8; }
+        #about-section .about-highlight { font-weight: 600; color: var(--link-color); }
+        #about-section .about-icons { font-size: 1.5em; color: var(--meta-color); margin-top: 10px; margin-bottom: 25px; }
+        #about-section .about-icons i { margin: 0 10px; display: inline-block; animation: bounce 1.5s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55); animation-delay: calc(0.15s * var(--i)); }
+        #about-section .about-icons i:nth-child(1) { --i: 1; } #about-section .about-icons i:nth-child(2) { --i: 2; } #about-section .about-icons i:nth-child(3) { --i: 3; } #about-section .about-icons i:nth-child(4) { --i: 4; }
+        @keyframes bounce { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-10px) scale(1.1); } }
+        .cta-button { background: var(--button-gradient); color: #ffffff; border: none; padding: 12px 25px; border-radius: 25px; font-size: 1.05em; font-weight: 600; cursor: pointer; margin: 15px 0 20px 0; transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.2s ease; display: inline-block; text-decoration: none; }
+        .cta-button:hover, .cta-button:focus { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); outline: none; }
+        body.dark-mode .cta-button:hover, body.dark-mode .cta-button:focus { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+        #about-section p:last-of-type { margin-top: 20px; color: var(--meta-color); }
+
+        /* Footer */
+        .site-footer { text-align: center; margin-top: 60px; padding: 25px; font-size: 0.9em; color: var(--meta-color); border-top: 1px solid var(--border-color); transition: color 0.3s ease, border-color 0.3s ease; }
+        .site-footer a { color: var(--link-color); text-decoration: none; font-weight: 600; }
+        .site-footer a:hover, .site-footer a:focus { color: var(--link-hover); text-decoration: underline; outline: none; }
+
+        /* Back to Top */
+        #back-to-top { position: fixed; bottom: 30px; right: 30px; background: var(--button-gradient); color: #ffffff; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.3em; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease; z-index: 999; opacity: 0; transform: translateY(10px); }
+        #back-to-top.visible { opacity: 1; transform: translateY(0); }
+        #back-to-top:hover, #back-to-top:focus { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0,0,0,0.2); outline: none; }
+        body.dark-mode #back-to-top:hover, body.dark-mode #back-to-top:focus { box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
+
+        /* Sticky Bottom Ad */
+        .ad-sticky-bottom { position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1001; padding: 0; background: var(--bg-color); box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); transition: transform 0.4s ease-in-out, background-color 0.3s ease; transform: translateY(100%); display: block !important; }
+        .ad-sticky-bottom.visible { transform: translateY(0%); }
+        .ad-sticky-bottom .ad-placeholder { max-width: 950px; margin: 0 auto; min-height: 60px; padding: 10px 20px; box-shadow: none; border: none; border-radius: 0; margin-bottom: 0; }
+        .ad-sticky-bottom .ad-placeholder small { display: none; }
+
+        /* Sidebar Ad */
+        .ad-sidebar { position: fixed; right: 20px; top: 120px; width: 300px; z-index: 900; display: none; }
+        .ad-sidebar .ad-placeholder { min-height: 500px; max-height: 70vh; overflow: hidden; }
+
+
+        /* --- Responsive Adjustments --- */
+        @media (min-width: 1300px) {
+            .ad-sidebar { display: block; }
+            .container { max-width: calc(950px + 340px); }
+            #posts-container, #about-section, #pagination-controls, .hero-section, .filter-section, #favorites-section, #status-message-container { max-width: 950px; margin-left: 0; margin-right: 340px; }
+            .site-footer { max-width: none; margin-right: 0; }
+        }
+        @media (max-width: 1299px) {
+             .ad-sidebar { display: none !important; }
+             #posts-container, #about-section, #pagination-controls, .hero-section, .filter-section, #favorites-section, #status-message-container { max-width: 950px; margin-left: auto; margin-right: auto; }
+             .container { max-width: 950px; }
+        }
+        @media (max-width: 992px) {
+            .header-content { flex-direction: column; gap: 10px; }
+            .site-branding { order: 1; margin-bottom: 10px; }
+            .header-nav-controls { order: 2; width: 100%; justify-content: center; gap: 10px; flex-wrap: wrap; }
+            .main-navigation { order: 2; margin-bottom: 10px; }
+            .search-container { order: 1; max-width: 300px; margin-left: 0; margin-bottom: 10px; }
+            .header-controls { order: 3; margin-left: 0; justify-content: center; width: 100%; } /* Center controls */
+        }
+        @media (max-width: 768px) {
+             .site-branding { margin-bottom: 15px; width: 100%; justify-content: center; }
+             .site-branding h1 { font-size: 1.8em; }
+             .globe-container { width: 35px; height: 35px; margin-right: 8px;}
+             .header-nav-controls { flex-direction: column; gap: 15px;}
+             .main-navigation { width: 100%; margin-top: 0; margin-bottom: 15px; justify-content: center;}
+             .main-navigation ul { justify-content: center; flex-wrap: wrap; } /* Allow nav wrap */
+             .search-container { max-width: 280px; }
+             .hero-section { padding: 40px 20px; }
+             .hero-section h2 { font-size: 2em; }
+             .typed-text { font-size: 1.1em; }
+             .post-card { padding: 30px; }
+             .post-card h2.post-title { font-size: 1.6em; }
+             #tags-dropdown { left: 50%; transform: translateX(-50%) scale(0.95); transform-origin: top center; }
+             #tags-dropdown.visible { transform: translateX(-50%) scale(1); }
+             .ad-sticky-bottom .ad-placeholder { min-height: 50px; padding: 5px 10px; }
+             .ad-placeholder { min-height: 80px; }
+             body { padding-bottom: 80px; }
+             #posts-container, #about-section, #pagination-controls, .hero-section, .filter-section, #favorites-section, #status-message-container { margin-right: auto; } /* Reset margin */
+        }
+        @media (max-width: 520px) {
+             .site-branding h1 { font-size: 1.6em; }
+             .globe-container { width: 30px; height: 30px; margin-right: 6px;}
+             .main-navigation ul { gap: 10px; }
+             .main-navigation a { font-size: 0.9em; padding: 8px; }
+             .search-container { max-width: 90%; }
+             .header-controls { gap: 8px; flex-wrap: wrap; justify-content: center; }
+             .header-social-links a { font-size: 1.1em; }
+             #darkModeToggle, #theme-color { font-size: 0.95em; padding: 5px 7px; }
+             .hero-section h2 { font-size: 1.8em; }
+             .typed-text { font-size: 1em; }
+             .post-card { padding: 20px; }
+             .post-card h2.post-title { font-size: 1.4em; }
+             .post-description { font-size: 0.95em; }
+             .post-actions { gap: 8px; }
+             .post-actions button { padding: 9px 13px; font-size: 0.8em; } /* Adjusted padding */
+             #about-section { padding: 30px 20px; }
+             #about-section h2 { font-size: 1.8em; }
+             #about-section .about-intro { font-size: 1.1em; }
+             .cta-button { padding: 10px 20px; font-size: 1em; }
+             #pagination-controls { flex-direction: column; gap: 15px; }
+             #page-info { order: 2; }
+             #prev-button { order: 1; width: 100px; text-align: center; }
+             #next-button { order: 3; width: 100px; text-align: center; }
+             #tags-dropdown { min-width: 180px; }
+             #tags-dropdown li a { padding: 10px 15px; }
+             #back-to-top { width: 45px; height: 45px; font-size: 1.1em; bottom: 20px; right: 20px; }
+             body { padding-bottom: 70px; }
+             .filter-section, #favorites-section { margin-left: 0; margin-right: 0; }
+             #category-filter, #theme-color { min-width: 160px; font-size: 0.95em;}
+        }
+
+    </style>
+</head>
+<body>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="site-branding">
+                <div class="globe-container" id="globe"></div>
+                 <h1><a href="#">Dipesh's Creations 🚀</a></h1>
+            </div>
+            <div class="header-nav-controls">
+                 <nav class="main-navigation" role="navigation" aria-label="Main navigation">
+                     <ul>
+                         <li><a href="#">Home</a></li>
+                         <li><a href="#posts-container">Creations</a></li>
+                         <li class="nav-item-tags">
+                             <a href="#" id="tags-nav-link" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="tags-dropdown">Titles</a>
+                             <ul id="tags-dropdown" role="menu" aria-labelledby="tags-nav-link">
+                                 <li><a role="menuitem" href="#"><span class="emoji">⏳</span>Loading...</a></li>
+                             </ul>
+                         </li>
+                         <li><a href="#about-section">About</a></li>
+                     </ul>
+                 </nav>
+                 <div class="search-container">
+                     <input type="search" id="search-input" placeholder="Search creations..." aria-label="Search projects" aria-controls="search-autocomplete" aria-autocomplete="list">
+                     <i class="fas fa-search" aria-hidden="true"></i>
+                     <ul id="search-autocomplete" class="search-autocomplete" role="listbox"></ul>
+                 </div>
+                 <div class="header-controls">
+                      <div class="header-social-links">
+                           <a href="https://codepen.io/Dipesh-Sinha/collections/" target="_blank" rel="noopener noreferrer" aria-label="CodePen"><i class="fab fa-codepen" aria-hidden="true"></i></a>
+                           <a href="https://www.facebook.com/profile.php?id=61575205145753" target="_blank" rel="noopener noreferrer" aria-label="facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                           <a href="https://onlineinfo00.blogspot.com/?m=1" target="_blank" rel="noopener noreferrer" aria-label="blogger"><i class="fab fa-blogger" aria-hidden="true"></i></a>
+                           <a href="https://youtube.com/@dipesh093?si=gHGCgh8YWKxBX_eh" target="_blank" rel="noopener noreferrer" aria-label="youtube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                      </div>
+                       <select id="theme-color" aria-label="Select theme color">
+                           <option value="blue">Blue</option>
+                           <option value="green">Green</option>
+                           <option value="purple">Purple</option>
+                       </select>
+                      <button id="darkModeToggle" aria-label="Toggle dark mode" aria-live="polite">
+                          <i class="fas fa-sun" aria-hidden="true"></i>
+                      </button>
+                 </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Sidebar Ad -->
+        <aside class="ad-sidebar" role="complementary" aria-label="Sidebar Advertisements">
+            <div class="ad-placeholder">
+                <small>Advertisement</small>
+                <div class="adsbygoogle">Sidebar Ad (300x600)</div>
+                 <!-- PASTE SIDEBAR AD CODE HERE -->
+            </div>
+        </aside>
+
+        <!-- Hero Section -->
+        <section class="hero-section" aria-labelledby="hero-heading">
+             <h2 id="hero-heading">Welcome to My Digital Playground</h2>
+             <p class="typed-text" id="typed-text" aria-live="polite"></p>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section" aria-label="Filter creations">
+            <label for="category-filter" class="sr-only">Filter by category</label>
+            <select id="category-filter">
+                <option value="all">All Categories</option>
+                <option value="game">🎮 Games</option>
+                <option value="ui">🎨 UI/UX</option>
+                <option value="tool">🛠️ Tools</option>
+                <option value="effect">✨ Effects/Animations</option>
+                <option value="theme">🌐 Themes/Layouts</option>
+                <option value="other">💻 Other</option>
+            </select>
+        </section>
+
+        <!-- Favorites Section -->
+        <section id="favorites-section" style="display: none;" aria-labelledby="favorites-heading">
+            <h2 id="favorites-heading">⭐ Your Favorite Creations</h2>
+            <div id="favorites-container">
+                 <!-- Favorite items loaded here -->
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <main id="main-content">
+
+            <!-- Status Message Container -->
+            <div id="status-message-container" aria-live="polite">
+                <p class="status-message" id="loading-status">
+                    <i class="fas fa-spinner" aria-hidden="true"></i> Loading awesome creations...
+                 </p>
+            </div>
+
+            <!-- Posts Container -->
+            <div id="posts-container" aria-busy="true">
+                <!-- Post cards loaded here -->
+            </div>
+
+            <!-- Pagination Controls -->
+            <nav id="pagination-controls" style="display: none;" aria-label="Pagination">
+                 <button id="prev-button" disabled>← Previous</button>
+                 <span id="page-info" aria-live="polite">Page 1 of 1</span>
+                 <button id="next-button" disabled>Next →</button>
+            </nav>
+
+            <!-- About Me Section -->
+            <section id="about-section" aria-labelledby="about-heading">
+                 <h2 id="about-heading">👋 Hello There! I'm Dipesh.</h2>
+                 <p class="about-intro"> Welcome to my corner of the web! I'm a passionate <span class="about-highlight">coder</span> and creative <span class="about-highlight">tinkerer</span>, always exploring new ways to bring ideas to life through technology. Here you'll find a collection of my projects, experiments, and fun creations.<b> Email : sinhadipesh093@gmail.com</b></p>
+                 <div class="about-icons" aria-hidden="true">
+                     <i class="fas fa-code"></i><i class="fas fa-gamepad"></i><i class="fas fa-lightbulb"></i><i class="fas fa-rocket"></i>
+                </div>
+                 <a href="#posts-container" class="cta-button" onclick="analytics.trackEvent('Navigation', 'ClickExploreCTA'); document.getElementById('posts-container').scrollIntoView({ behavior: 'smooth' }); return false;">Explore Creations 🚀</a>
+                 <p>Enjoy exploring!</p>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            Creations showcased from <a href="https://codepen.io/Dipesh-Sinha" target="_blank" rel="noopener noreferrer">CodePen</a>.
+            © <script>document.write(new Date().getFullYear());</script> Dipesh. All rights reserved.
+            <!-- <button onclick="exportAnalytics()" style="margin-left: 10px; background: none; border: none; color: var(--link-color); cursor: pointer;">Export Analytics (Admin)</button> -->
+        </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Sticky Bottom Ad -->
+    <aside class="ad-sticky-bottom" role="complementary" aria-label="Bottom Advertisement">
+        <div class="ad-placeholder">
+            <div class="adsbygoogle">Sticky Bottom Ad</div>
+             <!-- PASTE STICKY AD CODE HERE -->
+        </div>
+    </aside>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+
+    <!-- JavaScript -->
+    <script>
+        // --- Analytics Object (localStorage based) ---
+        const analytics = {
+            trackEvent: (category, action, label = '') => {
+                try {
+                    const event = { category, action, label, timestamp: new Date().toISOString() };
+                    let events = JSON.parse(localStorage.getItem('dipeshCreations_analytics') || '[]');
+                    if (events.length > 500) events = events.slice(-500); // Limit size
+                    events.push(event);
+                    localStorage.setItem('dipeshCreations_analytics', JSON.stringify(events));
+                    // console.log('Analytics Tracked:', event);
+                } catch (e) { console.error("Analytics tracking failed:", e); }
+            },
+            getEvents: () => {
+                try { return JSON.parse(localStorage.getItem('dipeshCreations_analytics') || '[]'); }
+                catch (e) { console.error("Failed to retrieve analytics events:", e); return []; }
+            }
+        };
+        function exportAnalytics() { /* ... (export function remains the same) ... */ }
+
+        // --- DOM Element References ---
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const themeColorSelect = document.getElementById('theme-color');
+        const body = document.body;
+        const postsContainer = document.getElementById('posts-container');
+        const paginationControls = document.getElementById('pagination-controls');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        const pageInfo = document.getElementById('page-info');
+        const categoryFilter = document.getElementById('category-filter');
+        const searchInput = document.getElementById('search-input');
+        const searchAutocomplete = document.getElementById('search-autocomplete');
+        const tagsNavLink = document.getElementById('tags-nav-link');
+        const tagsDropdown = document.getElementById('tags-dropdown');
+        const backToTopButton = document.getElementById('back-to-top');
+        const stickyAd = document.querySelector('.ad-sticky-bottom');
+        const statusMessageContainer = document.getElementById('status-message-container');
+        const loadingStatus = document.getElementById('loading-status');
+        const favoritesContainer = document.getElementById('favorites-container');
+        const favoritesSection = document.getElementById('favorites-section');
+
+        // --- State Variables ---
+        let globeMaterial;
+        const sunIcon = 'fa-sun';
+        const moonIcon = 'fa-moon';
+        let currentItems = []; // Filtered list derived from fullCodepenData
+        let currentPage = 1;
+        const postsPerPage = 6;
+        let totalPages = 1;
+        let favorites = []; // Loaded in DOMContentLoaded
+        let isDarkMode = false; // Determined initially
+        let currentThemeColor = 'blue'; // Determined initially
+
+        // --- Helper Functions ---
+        function escapeHTML(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(str));
+            return div.innerHTML;
+        }
+
+        function updateStatusMessage(htmlContent, isBusy = false) {
+            if (loadingStatus) {
+                loadingStatus.innerHTML = htmlContent;
+                statusMessageContainer.style.display = 'block';
+            }
+             if (postsContainer) postsContainer.setAttribute('aria-busy', isBusy.toString());
+             if(!isBusy && !htmlContent) {
+                 statusMessageContainer.style.display = 'none'; // Hide if not busy and no message
+             }
+        }
+
+        // --- Dark Mode & Theme Functionality ---
+        const applyCombinedTheme = (isDark, colorTheme) => {
+            body.classList.toggle('dark-mode', isDark);
+            body.classList.remove('theme-blue', 'theme-green', 'theme-purple');
+            body.classList.add(`theme-${colorTheme}`);
+
+            if (darkModeToggle) {
+                darkModeToggle.innerHTML = `<i class="fas ${isDark ? moonIcon : sunIcon}" aria-hidden="true"></i>`;
+                darkModeToggle.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} mode`);
+            }
+            if (themeColorSelect) themeColorSelect.value = colorTheme;
+
+            // Update PWA theme color meta tag (using computed style)
+            const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+             if (metaThemeColor) {
+                 // Use setTimeout to ensure styles are applied before getting computed style
+                 setTimeout(() => {
+                     const rootStyle = getComputedStyle(document.documentElement);
+                     const colorVar = isDark ? `--link-color-${colorTheme}-dark` : `--link-color-${colorTheme}-light`;
+                     const themeColorValue = rootStyle.getPropertyValue(colorVar).trim() || '#5a4bff'; // Fallback
+                     metaThemeColor.setAttribute('content', themeColorValue);
+                 }, 0);
+             }
+
+            // Update iframes theme
+            document.querySelectorAll('.iframe-container iframe').forEach(iframe => {
+                try {
+                    if (!iframe.src || iframe.src === "about:blank") return; // Don't update if src isn't set yet or is placeholder
+                    const currentSrc = new URL(iframe.src);
+                    const params = currentSrc.searchParams;
+                    params.set('theme-id', isDark ? 'dark' : 'light');
+                    const newSrc = currentSrc.toString();
+                    if (iframe.src !== newSrc) iframe.src = newSrc;
+                     // Also update the dataset src if present (for lazy loading fallback)
+                     if (iframe.dataset.src) {
+                         const currentDataSrc = new URL(iframe.dataset.src);
+                         const dataParams = currentDataSrc.searchParams;
+                         dataParams.set('theme-id', isDark ? 'dark' : 'light');
+                         iframe.dataset.src = currentDataSrc.toString();
+                     }
+                } catch (e) { console.warn("Could not update iframe theme:", e); }
+            });
+
+
+            // Update active button colors (like/save) using computed styles
+            const rootStyle = getComputedStyle(document.documentElement);
+             document.querySelectorAll('.post-actions button.liked, .post-actions button.saved').forEach(btn => {
+                 const isLiked = btn.classList.contains('liked');
+                 const colorVarName = isLiked
+                     ? (isDark ? '--liked-text-dark' : '--liked-text-light')
+                     : (isDark ? '--saved-text-dark' : '--saved-text-light');
+                const bgColorVarName = isLiked
+                     ? (isDark ? '--liked-bg-' + colorTheme + '-dark' : '--liked-bg-' + colorTheme + '-light')
+                     : (isDark ? '--saved-bg-' + colorTheme + '-dark' : '--saved-bg-' + colorTheme + '-light');
+
+                // Apply both text and background color from computed styles
+                btn.style.color = rootStyle.getPropertyValue(colorVarName).trim() || '#ffffff';
+                btn.style.background = rootStyle.getPropertyValue(bgColorVarName).trim();
+             });
+
+
+             // Update globe color based on the computed link color
+             if (globeMaterial) {
+                 try {
+                     const rootStyle = getComputedStyle(document.documentElement);
+                     const linkColorVar = isDark ? `--link-color-${colorTheme}-dark` : `--link-color-${colorTheme}-light`;
+                     const colorHex = rootStyle.getPropertyValue(linkColorVar).trim();
+                     if (colorHex) globeMaterial.color.set(colorHex);
+                 } catch(e) { console.warn("Could not set globe color:", e); }
+             }
+        };
+
+
+        // --- CodePen Data (Ensure 'category' is added to each item) ---
+        const fullCodepenData = [
+             // Add category: 'game', 'ui', 'tool', 'effect', 'theme', 'other'
+             { title: "Suduko Pro", description: "Challenge your logic and number skills...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/LEYJQeJ", category: "game" },
+             { title: "Emoji Racer", description: "Ready, set, go! Race cute emojis...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/vEYzdyQ", category: "game" },
+             { title: "Tic-Tac-Toe Game", description: "The timeless game of Noughts and Crosses...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/zxYJRRp", category: "game" },
+             { title: "Florr.io Style Game", description: "A fun, colorful game inspired by Florr.io...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/azbMMWB", category: "game" },
+             { title: "Flippy Bird Game", description: "Tap to flap! Navigate the bird...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/WbNmmEB", category: "game" },
+             { title: "Google Offline Dino Game", description: "Relive the Chrome browser's offline T-Rex runner...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/MYWxxvY", category: "game" },
+             { title: "Crossy Road Game", description: "Why did the chicken cross the road?...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/QwWooqX", category: "game" },
+             { title: "Royal Arena Chess", description: "Checkmate! Play a game of chess...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/zxYbbjN", category: "game" },
+             { title: "Rock Paper Scissors", description: "The ultimate decision-maker! Play Rock Paper Scissors...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/MYWMRGa", category: "game" },
+             { title: "Escape Run 3D", description: "Run, jump, and dodge obstacles in this fast-paced 3D...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/vEYoyNQ", category: "game" },
+             { title: "Card Matching Game", description: "Test your memory! Flip cards and find matching pairs...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/JojgbKL", category: "game" },
+             { title: "Car Runner Game", description: "Steer your car, avoid traffic...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/emYqvad", category: "game" },
+             { title: "Sliding Puzzle", description: "Unscramble the image by sliding the tiles...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/emmzwzQ", category: "game" },
+             { title: "Login/Signup Page", description: "A clean and simple user authentication form template.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/ByaOrpp", category: "ui" },
+             { title: "Advanced Login/Signup 1", description: "A more sophisticated login/signup form...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/ogNKWvq", category: "ui" },
+             { title: "Advanced Login/Signup 2", description: "Another variation of an advanced user authentication interface.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/vEENGYG", category: "ui" },
+             { title: "Advanced Glow Timer", description: "A sleek, modern timer with a cool glowing effect...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/jEEOpKw", category: "tool" },
+             { title: "Next-Level Multi-Step Form UI", description: "An intuitive multi-step form interface...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/LEEpPaW", category: "ui" },
+             { title: "Hacker Login Page", description: "A fun, stylized login page with a 'hacker' terminal aesthetic.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/GgRVymx", category: "ui" },
+             { title: "Hacker Typer Effect", description: "Simulate the classic hacker typing effect...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/PwoMxYZ", category: "effect" },
+             { title: "VLC Media Player UI Clone", description: "A frontend clone mimicking the interface of VLC player.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/GgRXzVg", category: "ui" },
+             { title: "Terabox Video Downloader UI", description: "A concept UI for a tool to download videos...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/EaxMMZy", category: "ui" },
+             { title: "Text To Watch Face", description: "Display text in a creative, watch-like format.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/jEOJJag", category: "effect" },
+             { title: "Pro AI Interface Concept", description: "A futuristic interface concept for an AI application.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/ogNVVEo", category: "ui" },
+             { title: "Interactive Calendar", description: "A functional and interactive calendar component.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/xbxBexp", category: "tool" },
+             { title: "Real-Time Clock", description: "A simple, clean clock displaying the current time.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/ogNOLVE", category: "tool" },
+             { title: "Photo Compressor UI", description: "A user interface concept for an image compression tool.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/xbxNqXp", category: "ui" },
+             { title: "Image Adjuster Tool", description: "Adjust brightness, contrast, and other properties...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/qEBGrVo", category: "tool" },
+             { title: "All Converter Tool Pro UI", description: "A concept for a versatile unit conversion tool.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/ogNRZpy", category: "ui" },
+             { title: "Weather Checker App", description: "Check the current weather conditions...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/GgRbeaO", category: "tool" },
+             { title: "Dark/Light Mode Toggle", description: "A simple toggle switch component for changing themes.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/MYWNwVv", category: "ui" },
+             { title: "FAQ Accordion", description: "A common UI pattern for Frequently Asked Questions...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/LEYwOeY", category: "ui" },
+             { title: "Animated Love Letter", description: "A cute, animated 'love letter' reveal effect.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/RNwXqVr", category: "effect" },
+             { title: "Card Flip Effect", description: "A classic CSS card flip animation...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/WbNVYVy", category: "effect" },
+             { title: "Mail Box UI Concept", description: "A clean interface concept for an email client...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/dPyxapK", category: "ui" },
+             { title: "Text-to-Speech Tool", description: "Convert written text into audible speech...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/raNXPJG", category: "tool" },
+             { title: "Font Generator Tool 1", description: "Experiment with different font styles...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/VYYZQgq", category: "tool" },
+             { title: "Font Generator Tool 2", description: "Another tool for exploring fonts...", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/YPPKawo", category: "tool" },
+             { title: "Simple Web Theme 1", description: "A basic, clean website template layout.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/PwwYeZK", category: "theme" },
+             { title: "Simple Web Theme 2", description: "Another simple website layout example.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/bNNbOqM", category: "theme" },
+             { title: "Simple Web Theme 3", description: "A third example of a web page theme.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/QwwWwQZ", category: "theme" },
+             { title: "Simple Web Theme 4", description: "Clean layout demonstrating basic web structure.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/NPPWaZq", category: "theme" },
+             { title: "Simple Web Theme 5", description: "Yet another versatile starter template.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/ZYYbQgq", category: "theme" },
+             { title: "Simple Web Theme 6", description: "Minimalist web theme structure example.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/GggZJam", category: "theme" },
+             { title: "Simple Web Theme 7", description: "A straightforward theme suitable for content.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/LEENpex", category: "theme" },
+             { title: "Simple Web Theme 8", description: "Final example of a clean, basic web theme.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/gbbrzoy", category: "theme" },
+             { title: "YT Tags Generator 1", description: "Tool to help generate relevant tags for YouTube.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/VYYwvoL", category: "tool" },
+             { title: "YT Tags Generator 2", description: "Another variation of a YouTube tag generator.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/zxxYrGX", category: "tool" },
+             { title: "Music Player UI", description: "A stylish user interface for a web music player.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/QwwWvPj", category: "ui" },
+             { title: "Creative Navigation Bar", description: "An example of an interesting navigation menu.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/JoojJVq", category: "ui" },
+             { title: "Fingerprint Lock UI", description: "A visual simulation of a fingerprint lock screen.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/raaNGBV", category: "ui" },
+             { title: "Chat Box UI 1", description: "A user interface design for a chat application.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/XJJmpog", category: "ui" },
+             { title: "Chat Box UI 2", description: "Another concept for a chat application interface.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/myyeRvv", category: "ui" },
+             { title: "Chat Box UI 3", description: "A third design variation for a chat box UI.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/xbbOeNP", category: "ui" },
+             { title: "Placeholder Project", description: "A project without a specific category assigned yet.", embedUrl: "https://codepen.io/Dipesh-Sinha/embed/abc1234", category: "other" },
+        ];
+
+
+        // --- Pagination, Rendering & Filtering ---
+        function filterAndCategorizeItems() {
+            const query = searchInput.value.trim().toLowerCase();
+            const selectedCategory = categoryFilter.value;
+
+            currentItems = fullCodepenData.filter(item => {
+                const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+                const matchesQuery = !query || item.title.toLowerCase().includes(query) || item.description.toLowerCase().includes(query);
+                return matchesCategory && matchesQuery;
+            });
+
+            renderPage(1); // Reset to page 1 of filtered results
+        }
+
+        // Placeholder stats fetcher
+        async function fetchPenStats(penUrl) {
+            try {
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 60 + Math.random() * 120));
+                let hash = 0;
+                for (let i = 0; i < penUrl.length; i++) { hash = (hash << 5) - hash + penUrl.charCodeAt(i); hash |= 0; }
+                const randomSeed = Math.abs(hash);
+                return {
+                    views: (randomSeed % 5000) + 50,
+                    likes: Math.floor(((randomSeed / 1000) % 1) * 200) + 5
+                };
+            } catch (error) {
+                console.error("Failed to fetch/simulate pen stats:", error);
+                return { views: 'N/A', likes: 'N/A' }; // Return fallback on error
+            }
+        }
+
+        // Main rendering function (now async)
+        async function renderPage(page) {
+            if (!postsContainer || !paginationControls) return;
+            currentPage = page;
+            postsContainer.innerHTML = ''; // Clear previous items immediately
+            updateStatusMessage(`<i class="fas fa-spinner" aria-hidden="true"></i> Loading page ${page}...`, true); // Show loading status
+            paginationControls.style.display = 'none'; // Hide pagination during load
+
+            const startIndex = (page - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const itemsToDisplay = currentItems.slice(startIndex, endIndex);
+
+            if (itemsToDisplay.length === 0) {
+                const query = searchInput.value.trim();
+                const category = categoryFilter.options[categoryFilter.selectedIndex].text;
+                let message = '<i class="fas fa-search" aria-hidden="true"></i> No creations found';
+                if (query) message += ` matching "${query}"`;
+                if (categoryFilter.value !== 'all') message += ` in category "${category}"`;
+                updateStatusMessage(`${message}.`, false);
+                postsContainer.innerHTML = ''; // Ensure container is empty
+                return;
+            }
+
+            try {
+                // Fetch stats concurrently
+                const statsPromises = itemsToDisplay.map(item => {
+                    const penUrl = item.embedUrl ? item.embedUrl.replace('/embed/', '/pen/') : '#';
+                    return fetchPenStats(penUrl);
+                });
+                const allStats = await Promise.all(statsPromises);
+
+                postsContainer.innerHTML = ''; // Clear just before adding new cards
+                updateStatusMessage('', false); // Clear status message
+
+                const adFrequency = window.innerWidth <= 768 ? 4 : 3;
+                let cardCounter = 0; // Count actual cards for ad insertion
+
+                itemsToDisplay.forEach((item, pageIndex) => {
+                    const postTitle = item.title || 'Untitled Creation';
+                    const postDescription = item.description || 'No description available.';
+                    const embedUrl = item.embedUrl;
+                    const penUrl = embedUrl ? embedUrl.replace('/embed/', '/pen/') : '#';
+                    const globalIndex = fullCodepenData.findIndex(fullItem => fullItem.embedUrl === item.embedUrl);
+                    if (globalIndex === -1) return; // Skip if item not found in full data (shouldn't happen)
+
+                    const cardId = `card-${globalIndex}`;
+                    const commentAreaId = `comment-area-${globalIndex}`;
+                    const commentsListId = `comments-list-${globalIndex}`;
+                    const isFavorite = favorites.includes(globalIndex);
+                    const stats = allStats[pageIndex] || { views: 'N/A', likes: 'N/A' };
+
+                    const article = document.createElement('article');
+                    article.className = 'post-card';
+                    article.id = cardId;
+                    article.style.setProperty('--card-index', pageIndex);
+                    article.setAttribute('aria-labelledby', `title-${globalIndex}`);
+
+                    const initialThemeId = isDarkMode ? 'dark' : 'light';
+                    const iframeSrcBase = `${embedUrl}?height=300&default-tab=result&user=Dipesh-Sinha&slug-hash=${embedUrl.split('/').pop()}`;
+                    const iframeSrcWithTheme = `${iframeSrcBase}&theme-id=${initialThemeId}`;
+
+                    // Create iframe container and iframe element
+                    const iframeContainer = document.createElement('div');
+                    iframeContainer.className = 'iframe-container';
+                    const iframe = document.createElement('iframe');
+                    iframe.height = "300"; // This height might be visually overridden by aspect ratio CSS, but good to keep
+                    iframe.style.width = "100%";
+                    iframe.scrolling = "no";
+                    iframe.title = postTitle;
+                    iframe.frameBorder = "no";
+                    iframe.allow = "fullscreen"; // Updated attribute
+                    iframe.loading = "lazy"; // Native lazy loading attribute
+                    iframe.dataset.src = iframeSrcWithTheme; // Store full src for observer fallback
+
+                    // Set src based on native support or defer for observer
+                    if ('loading' in HTMLIFrameElement.prototype) {
+                        iframe.src = iframeSrcWithTheme;
+                    } else {
+                        iframe.src = "about:blank"; // Placeholder for non-supporting browsers
+                        // Observer will be attached later
+                    }
+                    iframe.innerHTML = `See the Pen <a href='${penUrl}'>${postTitle}</a> by Dipesh (<a href='https://codepen.io/Dipesh-Sinha'>@Dipesh-Sinha</a>) on <a href='https://codepen.io'>CodePen</a>.`;
+                    iframeContainer.appendChild(iframe);
+
+                    article.innerHTML = `
+                        <h2 class="post-title" id="title-${globalIndex}" onclick="window.open('${penUrl}', '_blank'); analytics.trackEvent('Navigation', 'ClickTitle', '${postTitle}');">${postTitle}</h2>
+                        <p class="post-description">${escapeHTML(postDescription)}</p>
+                        <div class="post-stats">
+                            <span><i class="fas fa-eye" aria-hidden="true"></i> <span class="view-count">${stats.views}</span> Views</span>
+                            <span><i class="fas fa-heart" aria-hidden="true"></i> <span class="like-count">${stats.likes}</span> Likes</span>
+                            ${item.category ? `<span><i class="fas fa-tag" aria-hidden="true"></i> ${escapeHTML(item.category.charAt(0).toUpperCase() + item.category.slice(1))}</span>` : ''}
+                        </div>
+                        ${iframeContainer.outerHTML} <!-- Insert iframe container HTML -->
+                        <div class="post-actions">
+                             <button class="like-button" aria-pressed="false" title="Like this creation">
+                                 <i class="far fa-heart" aria-hidden="true"></i>&nbsp;Like <span class="like-count-display sr-only">0 likes</span>
+                             </button>
+                             <button class="share-button" title="Share this creation">
+                                 <i class="fas fa-share-alt" aria-hidden="true"></i>&nbsp;Share <span class="share-count">0</span>
+                             </button>
+                             <button class="comment-button" aria-expanded="false" aria-controls="${commentAreaId}" title="Leave a comment">
+                                 <i class="far fa-comment" aria-hidden="true"></i>&nbsp;Comment
+                             </button>
+                             <button class="save-button ${isFavorite ? 'saved' : ''}" aria-pressed="${isFavorite}" title="${isFavorite ? 'Remove from favorites' : 'Save to favorites'}">
+                                 <i class="${isFavorite ? 'fas' : 'far'} fa-bookmark" aria-hidden="true"></i>&nbsp;${isFavorite ? 'Saved' : 'Save'}
+                             </button>
+                             <div class="comment-area" id="${commentAreaId}">
+                                <label for="comment-input-${globalIndex}" class="sr-only">Comment for ${postTitle}</label>
+                                <textarea id="comment-input-${globalIndex}" placeholder="Your comment... (Stored locally)"></textarea>
+                                <button class="submit-comment-button">Post Comment</button>
+                                <div class="comments-list" id="${commentsListId}" aria-live="polite">
+                                    <!-- Comments loaded by JS -->
+                                </div>
+                             </div>
+                        </div>
+                    `;
+                    postsContainer.appendChild(article);
+                    cardCounter++;
+
+                    // Render comments for this card
+                    const commentsList = article.querySelector(`#${commentsListId}`);
+                    renderComments(globalIndex, commentsList);
+
+                    // Attach Intersection Observer for lazy loading fallback AFTER appending
+                    const currentIframe = article.querySelector('iframe');
+                    if (currentIframe && !('loading' in HTMLIFrameElement.prototype)) {
+                        const observer = new IntersectionObserver((entries, obs) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    const lazyIframe = entry.target;
+                                    if (lazyIframe.src === "about:blank") { // Load only if not loaded
+                                        lazyIframe.src = lazyIframe.dataset.src;
+                                    }
+                                    obs.unobserve(lazyIframe);
+                                }
+                            });
+                        }, { rootMargin: '250px' }); // Load when 250px away
+                        observer.observe(currentIframe);
+                    }
+
+                    // Insert Ad Placeholder
+                    if (cardCounter % adFrequency === 0 && pageIndex < itemsToDisplay.length - 1) {
+                        const adDiv = document.createElement('div');
+                        adDiv.className = 'ad-placeholder';
+                        adDiv.innerHTML = `<small>Advertisement</small><div class="adsbygoogle">Grid Ad Unit</div><!-- PASTE GRID AD CODE HERE -->`;
+                         adDiv.setAttribute('role', 'complementary');
+                         adDiv.setAttribute('aria-label', 'Advertisement');
+                        postsContainer.appendChild(adDiv);
+                    }
+                });
+
+                // Update pagination controls
+                totalPages = Math.ceil(currentItems.length / postsPerPage);
+                if (pageInfo) pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+                if (prevButton) prevButton.disabled = currentPage === 1;
+                if (nextButton) nextButton.disabled = currentPage === totalPages;
+                if (paginationControls) paginationControls.style.display = totalPages > 1 ? 'flex' : 'none';
+
+                // Re-apply interaction listeners and theme styles
+                addInteractionListeners(postsContainer);
+                addCommentListeners(postsContainer);
+                applyCombinedTheme(isDarkMode, currentThemeColor); // Ensure button styles are correct after render
+
+            } catch (error) {
+                console.error("Error rendering page:", error);
+                updateStatusMessage(`<i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Failed to load creations. Please try again later.`, false);
+                postsContainer.innerHTML = ''; // Clear container on error
+            }
+        }
+
+
+        // --- Event Listeners for Card Actions ---
+        function addInteractionListeners(container) {
+            container.addEventListener('click', function(event) {
+                const target = event.target;
+                const card = target.closest('.post-card');
+                if (!card) return;
+
+                const globalIndex = parseInt(card.id.split('-')[1], 10);
+                 if (isNaN(globalIndex)) return; // Invalid card ID somehow
+                const titleElement = card.querySelector('.post-title');
+                const title = titleElement ? titleElement.textContent : 'Untitled Creation';
+
+                // --- Like Button ---
+                const likeButton = target.closest('.like-button');
+                if (likeButton) {
+                    const liked = likeButton.getAttribute('aria-pressed') === 'true';
+                    likeButton.setAttribute('aria-pressed', !liked);
+                    likeButton.classList.toggle('liked', !liked);
+                    const icon = likeButton.querySelector('i');
+                    if (icon) { icon.className = `fas ${!liked ? 'fa-heart' : 'fa-heart-crack'}`; } // Use heart-crack for unlike state maybe? Or just toggle far/fas
+                    // Let applyCombinedTheme handle the text/bg color
+                    analytics.trackEvent('Interaction', liked ? 'Unlike' : 'Like', title);
+                    applyCombinedTheme(isDarkMode, currentThemeColor); // Update colors immediately
+                    return;
+                }
+
+                // --- Share Button ---
+                const shareButton = target.closest('.share-button');
+                if (shareButton) {
+                    const text = card.querySelector('.post-description')?.textContent || '';
+                    const iframeLink = card.querySelector('iframe')?.contentDocument?.querySelector('a'); // Might not work due to cross-origin
+                    let penUrl = card.querySelector('iframe')?.dataset.src?.replace('/embed/', '/pen/').split('?')[0] || '#'; // Get from dataset
+                    if (penUrl === '#' && titleElement) { // Fallback from title click handler
+                         const onclickAttr = titleElement.getAttribute('onclick');
+                         if (onclickAttr && onclickAttr.includes('window.open')) {
+                             const matches = onclickAttr.match(/window\.open\('([^']+)'/);
+                             if (matches && matches[1]) penUrl = matches[1];
+                         }
+                    }
+                    if (penUrl === '#') penUrl = window.location.href; // Final fallback
+
+                    const countSpan = shareButton.querySelector('.share-count');
+                    let currentCount = parseInt(countSpan?.textContent || '0');
+                    if (countSpan) countSpan.textContent = currentCount + 1; // Placeholder increment
+
+                    analytics.trackEvent('Interaction', 'ShareAttempt', title);
+
+                    if (navigator.share) {
+                        navigator.share({ title: `Check out: ${title}`, text: `Dipesh created this cool thing: ${text.substring(0, 100)}...`, url: penUrl })
+                            .then(() => analytics.trackEvent('Interaction', 'ShareSuccess', title))
+                            .catch(error => { if (error.name !== 'AbortError') { console.log('Sharing failed', error); analytics.trackEvent('Interaction', 'ShareError', title); } else { analytics.trackEvent('Interaction', 'ShareCancel', title); }});
+                    } else {
+                         try { navigator.clipboard.writeText(penUrl).then(() => alert(`Link copied to clipboard: ${penUrl}`)).catch(() => prompt(`Share this link:\n${penUrl}`)); } catch(e) { prompt(`Share this link:\n${penUrl}`); } // Clipboard fallback
+                    }
+                    return;
+                }
+
+                // --- Comment Button ---
+                const commentButton = target.closest('.comment-button');
+                if (commentButton) {
+                    const expanded = commentButton.getAttribute('aria-expanded') === 'true';
+                    const controlsId = commentButton.getAttribute('aria-controls');
+                    const commentArea = document.getElementById(controlsId);
+                    if (commentArea) {
+                        commentButton.setAttribute('aria-expanded', !expanded);
+                        commentArea.classList.toggle('visible', !expanded);
+                        if (!expanded) {
+                             commentArea.querySelector('textarea')?.focus();
+                             analytics.trackEvent('Interaction', 'OpenComments', title);
+                        } else {
+                             analytics.trackEvent('Interaction', 'CloseComments', title);
+                        }
+                    }
+                     return;
+                }
+
+                // --- Save Button ---
+                const saveButton = target.closest('.save-button');
+                if (saveButton) {
+                     const saved = saveButton.getAttribute('aria-pressed') === 'true';
+                     saveButton.setAttribute('aria-pressed', !saved);
+                     saveButton.classList.toggle('saved', !saved);
+                     const icon = saveButton.querySelector('i');
+                     if (icon) icon.className = `fa-bookmark ${!saved ? 'fas' : 'far'}`; // Toggle solid/regular
+                     saveButton.childNodes[1].nodeValue = !saved ? ' Saved' : ' Save'; // Update text node
+
+                    if (!saved) {
+                        if (!favorites.includes(globalIndex)) favorites.push(globalIndex);
+                        analytics.trackEvent('Interaction', 'SaveFavorite', title);
+                    } else {
+                        favorites = favorites.filter(i => i !== globalIndex);
+                        analytics.trackEvent('Interaction', 'UnsaveFavorite', title);
+                    }
+                     try { localStorage.setItem('dipeshCreations_favorites', JSON.stringify(favorites)); } catch (e) { console.error("Failed to save favorites:", e); }
+                    renderFavorites(); // Update the separate favorites list display
+                    applyCombinedTheme(isDarkMode, currentThemeColor); // Update button colors
+                    return;
+                }
+            });
+        }
+
+
+        // --- Comment Submission & Rendering ---
+        function renderComments(index, commentsListElement) {
+             if (!commentsListElement) return;
+             let comments = [];
+             try { comments = JSON.parse(localStorage.getItem(`dipeshCreations_comments-${index}`) || '[]'); } catch (e) { console.error("Failed to load comments:", e); }
+
+             commentsListElement.innerHTML = comments.length === 0
+                 ? '<p style="color: var(--meta-color); font-style: italic; font-size: 0.9em;">No comments yet. Be the first!</p>'
+                 : comments.map(c => `
+                     <div class="comment">
+                         <strong>${escapeHTML(c.user || 'Visitor')}</strong>: ${escapeHTML(c.text)}
+                         <small>${new Date(c.timestamp).toLocaleString()}</small>
+                     </div>
+                 `).join('');
+         }
+
+        function addCommentListeners(container) {
+            container.addEventListener('click', (event) => {
+                const submitButton = event.target.closest('.submit-comment-button');
+                if (submitButton) {
+                    const commentArea = submitButton.closest('.comment-area');
+                    const textarea = commentArea.querySelector('textarea');
+                    const commentsList = commentArea.querySelector('.comments-list');
+                    const card = commentArea.closest('.post-card');
+                    const index = parseInt(card.id.split('-')[1]);
+                    if (isNaN(index)) return;
+
+                    const commentText = textarea.value.trim();
+                    const title = card.querySelector('.post-title')?.textContent || 'Untitled Creation';
+
+                    if (commentText) {
+                        let comments = [];
+                        try { comments = JSON.parse(localStorage.getItem(`dipeshCreations_comments-${index}`) || '[]'); } catch (e) { console.error("Failed to load comments before saving:", e); }
+
+                        comments.push({ text: commentText, timestamp: new Date().toISOString(), user: 'Visitor' });
+                        if (comments.length > 50) comments = comments.slice(-50); // Limit stored comments
+
+                        try { localStorage.setItem(`dipeshCreations_comments-${index}`, JSON.stringify(comments)); } catch (e) { console.error("Failed to save comments:", e); alert("Could not save comment."); return; }
+
+                        renderComments(index, commentsList);
+                        textarea.value = '';
+                        analytics.trackEvent('Interaction', 'SubmitComment', title);
+                    } else {
+                         textarea.focus();
+                         analytics.trackEvent('Interaction', 'SubmitCommentAttemptEmpty', title);
+                    }
+                }
+            });
+        }
+
+
+        // --- Favorites Rendering ---
+        function renderFavorites() {
+            if (!favoritesContainer || !favoritesSection) return;
+            // Ensure 'favorites' array is current
+            try { favorites = JSON.parse(localStorage.getItem('dipeshCreations_favorites') || '[]'); } catch (e) { console.error("Failed to load favorites for rendering:", e); favorites = []; }
+
+            favoritesContainer.innerHTML = '';
+
+            if (favorites.length === 0) {
+                favoritesSection.style.display = 'none'; return;
+            }
+
+            favoritesSection.style.display = 'block';
+            favorites.sort((a, b) => a - b);
+
+            favorites.forEach(index => {
+                const item = fullCodepenData[index];
+                if (!item) return;
+                const div = document.createElement('div');
+                div.className = 'favorite-item';
+                div.innerHTML = `
+                    <a href="#card-${index}" onclick="handleFavoriteLinkClick(event, ${index})">${escapeHTML(item.title)}</a>
+                    <button class="remove-favorite" data-index="${index}" aria-label="Remove ${escapeHTML(item.title)} from favorites"><i class="fas fa-times" aria-hidden="true"></i></button>
+                `;
+                favoritesContainer.appendChild(div);
+            });
+
+            // Add listeners to remove buttons within the favorites list
+            favoritesContainer.querySelectorAll('.remove-favorite').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const indexToRemove = parseInt(btn.dataset.index);
+                    const itemTitle = fullCodepenData[indexToRemove]?.title || 'Item';
+                    favorites = favorites.filter(i => i !== indexToRemove);
+                     try { localStorage.setItem('dipeshCreations_favorites', JSON.stringify(favorites)); } catch (e) { console.error("Failed to update favorites after removal:", e); }
+                    analytics.trackEvent('Interaction', 'RemoveFavoriteFromList', itemTitle);
+                    renderFavorites(); // Re-render the list itself
+
+                    // Update the corresponding save button on the main page if visible
+                    const cardElement = document.getElementById(`card-${indexToRemove}`);
+                    if (cardElement) {
+                        const saveBtn = cardElement.querySelector('.save-button');
+                        if (saveBtn && saveBtn.classList.contains('saved')) { // Check if it was saved
+                            saveBtn.setAttribute('aria-pressed', 'false');
+                            saveBtn.classList.remove('saved');
+                            const icon = saveBtn.querySelector('i');
+                            if (icon) icon.className = 'far fa-bookmark';
+                            saveBtn.childNodes[1].nodeValue = ' Save'; // Update text node
+                            applyCombinedTheme(isDarkMode, currentThemeColor);
+                        }
+                    }
+                });
+            });
+        }
+
+        function handleFavoriteLinkClick(event, index) {
+             event.preventDefault();
+             const itemTitle = fullCodepenData[index]?.title || 'Item';
+             analytics.trackEvent('Navigation', 'ClickFavoriteLink', itemTitle);
+
+             // Check if the item is currently displayed (i.e., matches filters)
+             const itemGlobalIndex = index; // Index in fullCodepenData
+             const itemInCurrentItems = currentItems.findIndex(item => fullCodepenData.findIndex(fItem => fItem.embedUrl === item.embedUrl) === itemGlobalIndex);
+
+             if (itemInCurrentItems !== -1) {
+                 // Item is in the current filtered list, find its page
+                 const targetPage = Math.ceil((itemInCurrentItems + 1) / postsPerPage);
+                 if (targetPage === currentPage) {
+                     scrollToCard(itemGlobalIndex); // Already on page, just scroll
+                 } else {
+                     renderPage(targetPage); // Go to the correct page
+                     setTimeout(() => scrollToCard(itemGlobalIndex), 200);
+                 }
+             } else {
+                 // Item is not in the current filtered list. Reset filters and go to page.
+                 searchInput.value = '';
+                 categoryFilter.value = 'all';
+                 // Recalculate currentItems without filters
+                 currentItems = [...fullCodepenData];
+                 const targetPage = Math.ceil((itemGlobalIndex + 1) / postsPerPage);
+                 renderPage(targetPage); // Render the page with the item
+                 setTimeout(() => scrollToCard(itemGlobalIndex), 200);
+             }
+        }
+
+
+        // --- Pagination ---
+        function setupPaginationListeners() {
+            if(prevButton) prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    analytics.trackEvent('Navigation', 'ClickPagination', 'Previous');
+                    renderPage(currentPage - 1);
+                    scrollToTopOfPosts();
+                }
+            });
+             if(nextButton) nextButton.addEventListener('click', () => {
+                 if (currentPage < totalPages) {
+                     analytics.trackEvent('Navigation', 'ClickPagination', 'Next');
+                     renderPage(currentPage + 1);
+                     scrollToTopOfPosts();
+                 }
+             });
+        }
+        function scrollToTopOfPosts() {
+            const headerHeight = document.querySelector('.site-header')?.offsetHeight || 70;
+            const focusTarget = statusMessageContainer || postsContainer || document.body; // Target for focus shift
+            const targetScrollPos = (postsContainer?.offsetTop || 0) - headerHeight - 20;
+            window.scrollTo({ top: Math.max(0, targetScrollPos), behavior: 'smooth' });
+             // Shift focus to the top of the content area for screen readers after scroll
+             setTimeout(() => focusTarget.focus({ preventScroll: true }), 300); // Delay after smooth scroll
+        }
+
+        // --- Scroll To Card ---
+        function scrollToCard(index) {
+             const targetId = `card-${index}`;
+             const targetElement = document.getElementById(targetId);
+
+             if (targetElement) {
+                 const headerHeight = document.querySelector('.site-header')?.offsetHeight || 70;
+                 const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                 const offsetPosition = elementPosition - headerHeight - 20; // Adjust for header
+
+                 window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+
+                 // Highlight & focus effect
+                 targetElement.style.transition = 'outline 0.1s ease-in-out, transform 0.2s ease, box-shadow 0.2s ease';
+                 targetElement.style.outline = '3px solid var(--link-color)';
+                 targetElement.style.transform = 'scale(1.01)';
+                 targetElement.style.boxShadow = '0 8px 25px rgba(0,0,0,0.2)';
+                 targetElement.focus({ preventScroll: true }); // Focus the card
+
+                 setTimeout(() => {
+                     targetElement.style.outline = '';
+                     targetElement.style.transform = '';
+                     targetElement.style.boxShadow = ''; // Revert to default CSS shadow
+                 }, 1800);
+             } else {
+                 console.warn(`Card with ID ${targetId} not found on the current page.`);
+                 scrollToTopOfPosts(); // Fallback scroll
+             }
+         }
+
+        // --- Tags Dropdown ---
+        function populateTagsDropdown() {
+            if (!tagsDropdown || !fullCodepenData || fullCodepenData.length === 0) {
+                if(tagsDropdown) tagsDropdown.innerHTML = '<li><a role="menuitem" href="#">No titles found</a></li>';
+                return;
+            }
+            tagsDropdown.innerHTML = ''; // Clear loading/previous
+
+            const penEmojiMap = { "game": "🎮", "ui": "🎨", "form": "📝", "tool": "🛠️", "sudoku": "🔢", "timer": "⏱️", "clock": "⏰", "effect": "✨", "theme": "🌐", "chess": "♟️", "generator": "⚙️", "player": "🎵", "chat": "💬", "puzzle": "🧩", "card": "🃏", "bird": "🐦", "dino": "🦖", "runner": "🏃", "downloader": "💾", "converter": "🔄", "weather": "🌦️", "photo": "🖼️", "image": "🖌️", "login": "🔑", "letter": "💌", "calendar": "📅", "nav": "🧭", "box": "📦", "face": "😀", "ai": "🤖", "speech": "🗣️" };
+            const defaultEmoji = "💻";
+
+            fullCodepenData.forEach((item, index) => {
+                const titleLower = item.title.toLowerCase();
+                let emoji = defaultEmoji;
+                for (const key in penEmojiMap) { if (titleLower.includes(key)) { emoji = penEmojiMap[key]; break; } }
+
+                const listItem = document.createElement('li'); listItem.setAttribute('role', 'none'); // Role on li is none
+                const link = document.createElement('a');
+                link.href = `#card-${index}`;
+                link.setAttribute('role', 'menuitem');
+                link.dataset.itemIndex = index;
+                link.innerHTML = `<span class="emoji" aria-hidden="true">${emoji}</span> ${escapeHTML(item.title || 'Untitled Creation')}`;
+                listItem.appendChild(link);
+                tagsDropdown.appendChild(listItem);
+            });
+        }
+
+        function setupTagsDropdownListeners() {
+            if (!tagsNavLink || !tagsDropdown) return;
+
+            tagsNavLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                const isVisible = tagsDropdown.classList.toggle('visible');
+                tagsNavLink.setAttribute('aria-expanded', isVisible);
+                tagsNavLink.classList.toggle('open', isVisible);
+                if (isVisible) {
+                    analytics.trackEvent('Navigation', 'OpenTagsDropdown');
+                    // Focus first item when opening
+                    setTimeout(() => tagsDropdown.querySelector('a[role="menuitem"]')?.focus(), 0);
+                } else {
+                    // Optionally return focus to the toggle button when closed via click
+                    // tagsNavLink.focus();
+                }
+            });
+
+            tagsDropdown.addEventListener('click', (event) => {
+                 const link = event.target.closest('a[role="menuitem"]');
+                 if (link && link.dataset.itemIndex !== undefined) {
+                     event.preventDefault();
+                     const itemIndex = parseInt(link.dataset.itemIndex, 10);
+                     const itemTitle = fullCodepenData[itemIndex]?.title || 'Item';
+                     analytics.trackEvent('Navigation', 'ClickTagLink', itemTitle);
+
+                     // Close dropdown first
+                     tagsDropdown.classList.remove('visible');
+                     tagsNavLink.setAttribute('aria-expanded', 'false');
+                     tagsNavLink.classList.remove('open');
+                     tagsNavLink.focus(); // Return focus to the toggle button
+
+                     // Handle navigation similar to favorites link click
+                     const itemInCurrentItems = currentItems.findIndex(item => fullCodepenData.findIndex(fItem => fItem.embedUrl === item.embedUrl) === itemIndex);
+                     if (itemInCurrentItems !== -1) {
+                         const targetPage = Math.ceil((itemInCurrentItems + 1) / postsPerPage);
+                         if (targetPage === currentPage) {
+                             scrollToCard(itemIndex);
+                         } else {
+                             renderPage(targetPage);
+                             setTimeout(() => scrollToCard(itemIndex), 200);
+                         }
+                     } else {
+                         searchInput.value = '';
+                         categoryFilter.value = 'all';
+                         currentItems = [...fullCodepenData];
+                         const targetPage = Math.ceil((itemIndex + 1) / postsPerPage);
+                         renderPage(targetPage);
+                         setTimeout(() => scrollToCard(itemIndex), 200);
+                     }
+                 }
+             });
+
+            // Keyboard navigation for dropdown
+            tagsDropdown.addEventListener('keydown', (e) => {
+                 if (e.key === 'Escape') {
+                     e.stopPropagation(); // Prevent closing if nested
+                     tagsDropdown.classList.remove('visible');
+                     tagsNavLink.setAttribute('aria-expanded', 'false');
+                     tagsNavLink.classList.remove('open');
+                     tagsNavLink.focus(); // Return focus
+                 } else if (e.key === 'Tab' || e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                     const items = Array.from(tagsDropdown.querySelectorAll('a[role="menuitem"]'));
+                     if (!items.length) return;
+                     let currentIndex = items.findIndex(item => item === document.activeElement);
+
+                     e.preventDefault(); // Prevent default tab behavior/scrolling
+
+                     if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
+                         currentIndex = (currentIndex + 1) % items.length;
+                     } else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
+                         currentIndex = (currentIndex - 1 + items.length) % items.length;
+                     }
+                     items[currentIndex]?.focus();
+                 }
+             });
+
+             // Allow Enter/Space to activate menu items
+             tagsDropdown.querySelectorAll('a[role="menuitem"]').forEach(link => {
+                link.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        link.click();
+                    }
+                });
+             });
+
+             // Keyboard interaction for the toggle button itself
+             tagsNavLink.addEventListener('keydown', (e) => {
+                  if ((e.key === 'Enter' || e.key === ' ') && !tagsDropdown.classList.contains('visible')) {
+                       e.preventDefault();
+                       tagsNavLink.click(); // Open dropdown via click handler
+                  } else if (e.key === 'ArrowDown' && tagsDropdown.classList.contains('visible')) {
+                       e.preventDefault();
+                       tagsDropdown.querySelector('a[role="menuitem"]')?.focus(); // Focus first item
+                  } else if (e.key === 'Escape' && tagsDropdown.classList.contains('visible')) {
+                       e.preventDefault();
+                       tagsNavLink.click(); // Close dropdown
+                       tagsNavLink.focus(); // Keep focus on toggle
+                  }
+             });
+
+            // Close dropdown if clicking outside
+            document.addEventListener('click', (event) => {
+                 if (!tagsDropdown || !tagsNavLink) return; // Check elements exist
+                 const isClickInsideDropdown = tagsDropdown.contains(event.target);
+                 const isClickOnToggle = tagsNavLink.contains(event.target);
+                 if (!isClickInsideDropdown && !isClickOnToggle && tagsDropdown.classList.contains('visible')) {
+                     tagsDropdown.classList.remove('visible');
+                     tagsNavLink.setAttribute('aria-expanded', 'false');
+                     tagsNavLink.classList.remove('open');
+                 }
+            });
+        }
+
+        // --- Back to Top Button ---
+        function setupBackToTop() {
+            if (!backToTopButton) return;
+            window.addEventListener('scroll', () => {
+                 backToTopButton.classList.toggle('visible', window.scrollY > 400);
+            }, { passive: true });
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                analytics.trackEvent('Navigation', 'ClickBackToTop');
+            });
+        }
+
+        // --- Sticky Ad Visibility ---
+        function setupStickyAd() {
+            if (!stickyAd) return;
+            let adShown = stickyAd.classList.contains('visible'); // Check initial state
+            const showAdThreshold = 350;
+             const checkAdVisibility = () => {
+                 const shouldBeVisible = window.scrollY > showAdThreshold;
+                 if (shouldBeVisible && !adShown) {
+                     stickyAd.classList.add('visible');
+                     adShown = true;
+                 } else if (!shouldBeVisible && adShown) {
+                     // Optional: Hide if scrolled back up significantly
+                     // stickyAd.classList.remove('visible');
+                     // adShown = false;
+                 }
+             };
+            window.addEventListener('scroll', checkAdVisibility, { passive: true });
+            checkAdVisibility(); // Initial check
+        }
+
+        // --- Search Box ---
+        function setupSearch() {
+            if (!searchInput || !searchAutocomplete) return;
+
+            function displayAutocompleteSuggestions(query) {
+                searchAutocomplete.innerHTML = '';
+                if (query.length < 1) { searchAutocomplete.classList.remove('visible'); return; }
+
+                const suggestions = fullCodepenData.filter(item =>
+                    item.title.toLowerCase().includes(query) || item.description.toLowerCase().includes(query)
+                ).slice(0, 6);
+
+                if (suggestions.length === 0) { searchAutocomplete.classList.remove('visible'); return; }
+
+                suggestions.forEach((item) => {
+                    const itemIndex = fullCodepenData.findIndex(fullItem => fullItem.embedUrl === item.embedUrl);
+                    const li = document.createElement('li'); li.setAttribute('role', 'option'); li.id=`search-option-${itemIndex}`;
+                    const a = document.createElement('a'); a.href = `#card-${itemIndex}`; a.textContent = item.title;
+                    a.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        analytics.trackEvent('Search', 'ClickAutocomplete', item.title);
+                        searchInput.value = item.title;
+                        searchAutocomplete.classList.remove('visible');
+                        filterAndCategorizeItems(); // Apply full filter
+                        // Scroll logic (similar to tags/favorites click)
+                         const itemInCurrentItems = currentItems.findIndex(filteredItem => fullCodepenData.findIndex(fullItem => fullItem.embedUrl === filteredItem.embedUrl) === itemIndex);
+                         if (itemInCurrentItems !== -1) {
+                             const targetPage = Math.ceil((itemInCurrentItems + 1) / postsPerPage);
+                             if (targetPage !== currentPage) renderPage(targetPage);
+                             setTimeout(() => scrollToCard(itemIndex), 150);
+                         } else { scrollToTopOfPosts(); } // Should be in list if filter is applied
+                    });
+                    li.appendChild(a); searchAutocomplete.appendChild(li);
+                });
+                searchAutocomplete.classList.add('visible');
+                 searchInput.setAttribute('aria-expanded', 'true');
+            }
+
+            searchInput.addEventListener('input', () => {
+                 const query = searchInput.value.trim().toLowerCase();
+                 displayAutocompleteSuggestions(query);
+                 filterAndCategorizeItems(); // Live filtering
+                 // Debounce analytics tracking for input? Maybe not necessary here.
+                 if (query) analytics.trackEvent('Search', 'Input', query);
+            });
+
+            // Keyboard nav for autocomplete
+             searchInput.addEventListener('keydown', (e) => {
+                 if (searchAutocomplete.classList.contains('visible')) {
+                     const items = Array.from(searchAutocomplete.querySelectorAll('a'));
+                     if (!items.length) return;
+
+                     let currentFocusIndex = items.findIndex(item => item === document.activeElement);
+
+                     if (e.key === 'ArrowDown') {
+                         e.preventDefault();
+                         const nextIndex = (currentFocusIndex + 1) % items.length;
+                         items[nextIndex]?.focus();
+                         searchInput.setAttribute('aria-activedescendant', items[nextIndex]?.parentElement.id || '');
+                     } else if (e.key === 'ArrowUp') {
+                         e.preventDefault();
+                         const prevIndex = (currentFocusIndex - 1 + items.length) % items.length;
+                         items[prevIndex]?.focus();
+                          searchInput.setAttribute('aria-activedescendant', items[prevIndex]?.parentElement.id || '');
+                     } else if (e.key === 'Enter' && currentFocusIndex > -1) {
+                         e.preventDefault();
+                         items[currentFocusIndex].click(); // Trigger click on focused item
+                     } else if (e.key === 'Escape') {
+                         searchAutocomplete.classList.remove('visible');
+                         searchInput.setAttribute('aria-expanded', 'false');
+                         searchInput.removeAttribute('aria-activedescendant');
+                     }
+                 } else if (e.key === 'ArrowDown' && searchInput.value.trim().length > 0) {
+                     // If suggestions available but hidden, show them and focus first
+                     displayAutocompleteSuggestions(searchInput.value.trim().toLowerCase());
+                      if (searchAutocomplete.classList.contains('visible')) {
+                          setTimeout(() => searchAutocomplete.querySelector('a')?.focus(), 0);
+                      }
+                 }
+             });
+
+            // Allow Enter/Space on autocomplete links
+            searchAutocomplete.addEventListener('keydown', (e) => {
+                 if ((e.key === 'Enter' || e.key === ' ') && document.activeElement?.tagName === 'A') {
+                     e.preventDefault(); document.activeElement.click();
+                 }
+             });
+
+            // Close autocomplete when clicking outside
+            document.addEventListener('click', (e) => {
+                if (searchInput && searchAutocomplete && !searchInput.contains(e.target) && !searchAutocomplete.contains(e.target)) {
+                    searchAutocomplete.classList.remove('visible');
+                     searchInput.setAttribute('aria-expanded', 'false');
+                     searchInput.removeAttribute('aria-activedescendant');
+                }
+            });
+        }
+
+        // --- Category Filter Listener ---
+        function setupCategoryFilter() {
+            if (categoryFilter) {
+                categoryFilter.addEventListener('change', () => {
+                    analytics.trackEvent('Filter', 'SelectCategory', categoryFilter.options[categoryFilter.selectedIndex].text);
+                    filterAndCategorizeItems();
+                });
+            }
+        }
+
+        // --- 3D Globe ---
+        function initGlobe() {
+            const container = document.getElementById('globe');
+             if (!container || typeof THREE === 'undefined') { console.warn("Globe container/Three.js missing."); if(container) container.style.display='none'; return; }
+
+            try {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
+                const setSize = () => {
+                     const newSize = window.innerWidth <= 768 ? (window.innerWidth <= 520 ? 30 : 35) : 45;
+                     renderer.setSize(newSize, newSize);
+                     camera.aspect = 1; camera.updateProjectionMatrix();
+                };
+                setSize(); // Initial size
+                renderer.setPixelRatio(window.devicePixelRatio);
+                container.appendChild(renderer.domElement);
+
+                const geometry = new THREE.SphereGeometry(0.4, 24, 24);
+                // Get initial color safely
+                 let initialColorHex = '#5a4bff'; // Default fallback
+                 try {
+                     const rootStyle = getComputedStyle(document.documentElement);
+                     const initialColorVar = isDarkMode ? `--link-color-${currentThemeColor}-dark` : `--link-color-${currentThemeColor}-light`;
+                     initialColorHex = rootStyle.getPropertyValue(initialColorVar).trim() || initialColorHex;
+                 } catch(e) { /* Use fallback */ }
+
+                globeMaterial = new THREE.MeshBasicMaterial({ color: initialColorHex, wireframe: true });
+                const globe = new THREE.Mesh(geometry, globeMaterial);
+                scene.add(globe);
+                camera.position.z = 0.75;
+
+                let animationFrameId;
+                function animate() { animationFrameId = requestAnimationFrame(animate); globe.rotation.y += 0.008; globe.rotation.x += 0.001; renderer.render(scene, camera); }
+                animate();
+
+                let resizeTimeout;
+                window.addEventListener('resize', () => { clearTimeout(resizeTimeout); resizeTimeout = setTimeout(setSize, 100); });
+
+                // Cleanup
+                window.addEventListener('beforeunload', () => { cancelAnimationFrame(animationFrameId); if (container && renderer.domElement) container.removeChild(renderer.domElement); renderer.dispose(); geometry.dispose(); globeMaterial.dispose(); });
+            } catch (error) {
+                console.error("Failed to initialize 3D Globe:", error);
+                if(container) container.style.display = 'none'; // Hide container on error
+            }
+        }
+
+        // --- Typed Text ---
+        function initTypedText() {
+            const typedTextElement = document.getElementById('typed-text');
+            if (!typedTextElement) return;
+            const phrases = ['Explore innovative projects...', 'Discover creative solutions...', 'Dive into interactive games...', 'Experience modern UI designs...'];
+            let phraseIndex = 0, charIndex = 0, isDeleting = false, typeTimeout;
+            let isPaused = false;
+
+            function type() {
+                if (isPaused) return; // Don't type if paused
+                clearTimeout(typeTimeout);
+                const currentPhrase = phrases[phraseIndex];
+                let displayedText = currentPhrase.substring(0, charIndex);
+                typedTextElement.innerHTML = `${displayedText}<span class="cursor" aria-hidden="true"></span>`;
+
+                const typeSpeed = isDeleting ? 50 : 100, delayAfterPhrase = 1800, delayBeforeDeleting = 500;
+
+                if (!isDeleting && charIndex < currentPhrase.length) { charIndex++; typeTimeout = setTimeout(type, typeSpeed); }
+                else if (isDeleting && charIndex > 0) { charIndex--; typeTimeout = setTimeout(type, typeSpeed); }
+                else if (!isDeleting && charIndex === currentPhrase.length) { isDeleting = true; typeTimeout = setTimeout(type, delayAfterPhrase); }
+                else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeTimeout = setTimeout(type, delayBeforeDeleting); }
+            }
+
+            // Pause typing if the window/tab is not visible
+             document.addEventListener("visibilitychange", () => {
+                 if (document.visibilityState === "hidden") {
+                     isPaused = true;
+                     clearTimeout(typeTimeout);
+                 } else {
+                     isPaused = false;
+                     type(); // Resume typing immediately
+                 }
+             });
+
+            type(); // Start
+        }
+
+
+        // --- Initial Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Track initial page view
+            analytics.trackEvent('Page', 'View', window.location.pathname + window.location.search);
+
+            // Load settings
+            const savedDarkMode = localStorage.getItem('dipeshCreations_themeMode');
+            const savedColorTheme = localStorage.getItem('dipeshCreations_themeColor') || 'blue';
+            const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+            isDarkMode = savedDarkMode === 'dark' || (!savedDarkMode && prefersDark);
+            currentThemeColor = savedColorTheme;
+
+            // Load favorites
+            try { favorites = JSON.parse(localStorage.getItem('dipeshCreations_favorites') || '[]'); } catch (e) { console.error("Failed to load favorites:", e); favorites = []; localStorage.removeItem('dipeshCreations_favorites'); }
+
+            // Apply initial theme FIRST
+            applyCombinedTheme(isDarkMode, currentThemeColor);
+
+            // Initialize UI components
+            initGlobe();
+            initTypedText();
+            renderFavorites(); // Render favorites list
+
+            // Setup Listeners
+            if (darkModeToggle) darkModeToggle.addEventListener('click', () => {
+                 isDarkMode = !isDarkMode;
+                 applyCombinedTheme(isDarkMode, currentThemeColor);
+                 try { localStorage.setItem('dipeshCreations_themeMode', isDarkMode ? 'dark' : 'light'); } catch (e) { console.error("Failed to save theme mode:", e); }
+                 analytics.trackEvent('Settings', 'ToggleDarkMode', isDarkMode ? 'Dark' : 'Light');
+             });
+            if (themeColorSelect) themeColorSelect.addEventListener('change', () => {
+                 currentThemeColor = themeColorSelect.value;
+                 applyCombinedTheme(isDarkMode, currentThemeColor);
+                 try { localStorage.setItem('dipeshCreations_themeColor', currentThemeColor); } catch (e) { console.error("Failed to save theme color:", e); }
+                 analytics.trackEvent('Settings', 'ChangeThemeColor', currentThemeColor);
+             });
+             window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                 if (localStorage.getItem('dipeshCreations_themeMode') === null) { // Only if user hasn't set manually
+                     isDarkMode = e.matches;
+                     applyCombinedTheme(isDarkMode, currentThemeColor);
+                 }
+             });
+             setupPaginationListeners();
+             setupTagsDropdownListeners();
+             setupBackToTop();
+             setupStickyAd();
+             setupSearch();
+             setupCategoryFilter();
+
+
+            // Initial data rendering
+            if (fullCodepenData && fullCodepenData.length > 0) {
+                currentItems = [...fullCodepenData]; // Start with full list
+                populateTagsDropdown();
+
+                // Handle direct card link
+                const urlParams = new URLSearchParams(window.location.search);
+                const cardIdParam = urlParams.get('card');
+                let targetItemIndex = -1;
+                let initialPage = 1;
+
+                if (cardIdParam && cardIdParam.startsWith('card-')) {
+                     targetItemIndex = parseInt(cardIdParam.split('-')[1], 10);
+                     if (!isNaN(targetItemIndex) && targetItemIndex >= 0 && targetItemIndex < fullCodepenData.length) {
+                          analytics.trackEvent('Navigation', 'DirectLink', `card-${targetItemIndex}`);
+                          // Reset filters if linking directly
+                           if (searchInput) searchInput.value = '';
+                           if (categoryFilter) categoryFilter.value = 'all';
+                           currentItems = [...fullCodepenData]; // Ensure we use full list for page calc
+                          initialPage = Math.ceil((targetItemIndex + 1) / postsPerPage);
+                     } else { targetItemIndex = -1; } // Invalid index
+                }
+
+                 renderPage(initialPage); // Render the initial page (might be > 1 if linked)
+
+                if (targetItemIndex !== -1) {
+                    setTimeout(() => scrollToCard(targetItemIndex), 300); // Delay slightly more for render
+                }
+
+            } else {
+                 updateStatusMessage('<i class="fas fa-exclamation-circle" aria-hidden="true"></i> No creations data found.', false);
+                 postsContainer.innerHTML = '';
+                 if (paginationControls) paginationControls.style.display = 'none';
+                 if (tagsDropdown) tagsDropdown.innerHTML = '<li><a role="menuitem" href="#">No titles available</a></li>';
+                 if (categoryFilter) categoryFilter.disabled = true;
+            }
+
+            // Register Service Worker for PWA
+             if ('serviceWorker' in navigator) {
+                 window.addEventListener('load', () => {
+                     navigator.serviceWorker.register('./sw.js') // Assuming sw.js is in the same directory
+                         .then(registration => { console.log('SW registered: ', registration.scope); analytics.trackEvent('PWA', 'ServiceWorkerRegistered'); })
+                         .catch(error => { console.error('SW registration failed: ', error); analytics.trackEvent('PWA', 'ServiceWorkerRegistrationFailed', error.message); });
+                 });
+             } else { analytics.trackEvent('PWA', 'ServiceWorkerNotSupported'); }
+        });
+
+    </script>
+
+</body>
+</html>
